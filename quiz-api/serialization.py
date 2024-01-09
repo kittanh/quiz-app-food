@@ -4,7 +4,8 @@ def question_to_dict(question):
         "title": question.title,
         "text": question.text,
         "position": question.position,
-        "image": question.image
+        "image": question.image,
+        "possibleAnswers": question.possibleAnswers
     }
 
 def dict_to_question(data):
@@ -12,5 +13,6 @@ def dict_to_question(data):
         title=data["title"],
         text=data["text"],
         position=data["position"],
-        image=data["image"]
+        image=data["image"],
+        possibleAnswers=data["possibleAnswers"]
     )

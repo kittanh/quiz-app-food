@@ -7,3 +7,11 @@ class Question:
         self.image = image
         self.possibleAnswers = possibleAnswers
 
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "text": self.text,
+            "position": self.position,
+            "image": self.image,
+            "possibleAnswers": self.possibleAnswers
+        }
