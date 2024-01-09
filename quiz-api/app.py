@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import create_question, get_all_questions  
+from database import create_question, get_all_questions, get_question_by_id, get_question_by_position  
 # from question import db
 from flask import Flask, request
 from jwt_utils import build_token, decode_token
@@ -48,6 +48,39 @@ def get_all_questions_route():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/questions/<int:question_id>', methods=['GET'])
+def get_question_by_id_route(question_id):
+    try:
+        # Call the new function to get a question by ID
+        question = get_question_by_id(question_id)
+
+        if question:
+            # Convert the question to a serialized format
+            serialized_question = question.to_dict()
+            return jsonify(serialized_question), 200
+        else:
+            return jsonify({'error': 'Question not found'}), 404
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/questions/position/<int:position>', methods=['GET'])
+def get_question_by_position_route(position):
+    try:
+        # Call the new function to get a question by position
+        question = get_question_by_position(position)
+
+        if question:
+            # Convert the question to a serialized format
+            serialized_question = question.to_dict()
+            return jsonify(serialized_question), 200
+        else:
+            return jsonify({'error': 'Question not found for the given position'}), 404
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/login', methods=['POST'])
 def postLogin():

@@ -87,3 +87,67 @@ def get_all_questions():
         # Close the SQLite cursor and connection
         cur.close()
         db_connection.close()
+
+def get_question_by_id(question_id):
+    try:
+        # Create a connection to the database
+        db_connection = sqlite3.connect('quiz.db')
+        db_connection.isolation_level = None
+        cur = db_connection.cursor()
+
+        # Retrieve the question from the database by ID
+        cur.execute("SELECT * FROM Question WHERE id = ?", (question_id,))
+        row = cur.fetchone()
+
+        if row:
+            question = Question(
+                title=row[1],
+                text=row[2],
+                position=row[3],
+                image=row[4],
+                possibleAnswers=json.loads(row[5])  # Deserialize the possibleAnswers
+            )
+            return question
+        else:
+            return None
+
+    except sqlite3.Error as e:
+        # Handle SQLite database errors
+        raise e
+
+    finally:
+        # Close the SQLite cursor and connection
+        cur.close()
+        db_connection.close()
+
+def get_question_by_position(position):
+    try:
+        # Create a connection to the database
+        db_connection = sqlite3.connect('quiz.db')
+        db_connection.isolation_level = None
+        cur = db_connection.cursor()
+
+        # Retrieve the question from the database by position
+        cur.execute("SELECT * FROM Question WHERE position = ?", (position,))
+        row = cur.fetchone()
+
+        if row:
+            question = Question(
+                title=row[1],
+                text=row[2],
+                position=row[3],
+                image=row[4],
+                possibleAnswers=json.loads(row[5])  # Deserialize the possibleAnswers
+            )
+            return question
+        else:
+            return None
+
+    except sqlite3.Error as e:
+        # Handle SQLite database errors
+        raise e
+
+    finally:
+        # Close the SQLite cursor and connection
+        cur.close()
+        db_connection.close()
